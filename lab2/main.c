@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
+#define min(x, y) (x)<=(y)?(x):(y)
 
 char* get_str(){
         char buf[80] = {0};
@@ -28,7 +29,7 @@ char* get_str(){
 }
 
 
-void input(List *list){
+int input(List *list, char* s){
         int len, i, num, ta, ts, n;
         char *ptr = s;
         char pt[] = " \t";
