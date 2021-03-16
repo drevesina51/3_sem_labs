@@ -29,16 +29,57 @@ char* get_str(){
 
 
 void input(List *list){
-	list_push_back(list, "a", 1, 5);
-	list_push_front(list, "*b", 2, 5);
-	list_push_back(list, "c", 2, 3);
-	list_push_front(list, "*d", 3, 1);
-	list_push_back(list, "e", 5, 2);
-	list_push_front(list, "*f", 10, 5);
-	list_push_front(list, "*g", 10, 4);
-	list_push_back(list, "h", 11, 1);
-	list_push_back(list, "i", 15, 2);
-	list_push_front(list, "*j", 15, 3);
+        int len, i, num, ta, ts, n;
+        char *ptr = s;
+        char pt[] = " \t";
+        char id[3];
+        char a[11];
+        do {
+                num = strspn (ptr, pt);
+                ptr += num;
+                if (*ptr != '\0') {
+            //id
+                        len = strcspn (ptr, "/");
+                        if (len == 0  || len == strlen(ptr))
+                                return 1;
+                        n = min(len, 2);
+                        for (i = 0; i < n; i++)
+                                id[i] = ptr[i];
+                        id[n] = '\0';
+                        ptr += len + 1;
+                        if (*ptr == '\0')
+                                return 1;
+            //ta
+                        len = strcspn (ptr, "/");
+                        if (len == 0 || len == strlen(ptr))
+                                return 1;
+                        n = min(len, 10);
+                        for (i = 0; i < n; i++)
+                                a[i] = ptr[i];
+                        a[n] = '\0';
+                        ta = atoi(a);
+                        if (ta == 0)
+                                return 1;
+                        ptr += len + 1;
+                        if (*ptr == '\0')
+                                return 1;
+            //ts
+                        len = strcspn (ptr, pt);
+                        if (len == 0)
+                                return 1;
+                        n = min(len, 10);
+                        for (i = 0; i < n; i++)
+                                a[i] = ptr[i];
+                        a[n] = '\0';
+                        ts = atoi(a);
+                        if (ts == 0)
+                                return 1;
+                        ptr += len;
+                }
+                if (id[0]!= '*') list_push_back(list, id, ta, ts);
+                else list_push_front(list, id, ta, ts);
+        } while (*ptr != '\0');
+    return 0;
 }
 
 void queue_process(List *list){
@@ -61,7 +102,16 @@ int main(){
 	char *s = NULL;
         List *list;
 	list = list_init(list);
-	input(list);
+        printf("Please, input data id/ta/ts:\n");
+        do {
+                s = get_str();
+                if (s)  {
+                                if (input(list, s) == 1) {
+                                        printf("Data is in incorrect form!\n");
+                                }
+                                free(s);
+                        }
+           } while(s);
 	queue_process(list);
 //	list_delete(list);
 	return 0;
