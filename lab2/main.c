@@ -52,7 +52,7 @@ void queue_process(List *list){
 			t = ptr->ts;//время обслуживания первого в очереди
 			list_remove(list, ptr->id);//удаление из очереди
 			time += t;//изменение времени на время приема пациента у доктора
-		} else time ++;// не нашлось пациентов в очереди в данный момент времени
+		} else while (list_find(list, time) == 0) time ++;// не нашлось пациентов в очереди в данный момент времени
 	}
 	printf("\n----- time: %d -----\nthe queue is empty\n", time);
 }
