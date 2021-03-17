@@ -5,7 +5,7 @@
 #define min(x, y) (x)<=(y)?(x):(y)
 
 char* get_str(){
-        char buf[80] = {0};
+        char buf[81] = {0};
         char* res = NULL;
         int len = 0;
         int n = 0;
@@ -101,7 +101,7 @@ void queue_process(List *list){
 
 int main(){
 	char *s = NULL;
-        List *list;
+        List *list = (List *) calloc(1, sizeof(List));
 	list = list_init(list);
         printf("Please, input data id/ta/ts:\n");
         do {
