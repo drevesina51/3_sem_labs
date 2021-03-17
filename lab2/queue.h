@@ -13,4 +13,4 @@ int queue_remove(Queue *queue, char *id);
 void queue_print_time(Queue *queue, int time);
 Data *queue_find(Queue *queue, int time);
 
-#endif //QUEUE_H
+#endif //QUEUE_H.
