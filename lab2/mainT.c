@@ -6,7 +6,7 @@
 #define min(x, y) (x)<=(y)?(x):(y)
 
 char* get_str(){
-        char buf[80] = {0};
+        char buf[81] = {0};
         char* res = NULL;
         int len = 0;
         int n = 0;
