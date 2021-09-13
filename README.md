@@ -1,4 +1,4 @@
-# Laboratory work of the 2nd semester
+# Laboratory work of the 3rd semester
 
 ***NRNU MEPhI student*** - Samorodov Roman Б20-513
 
