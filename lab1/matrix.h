@@ -25,10 +25,12 @@ namespace Lab1 {
 	}
 
 	Matrix* input(); // Ввод матрицы
-	void output(const char* msg, Matrix*& matrix); // Вывод матрицы
-	Matrix* erase(Matrix*& matrix, int lines); // Освобождение выделенной памяти
+	void output_with(const char* msg, Matrix*& matrix); // Вывод матрицы с нулями
+	void output_without(const char* msg, Matrix*& matrix); // Вывод матрицы без нулей
+	int erase(Matrix*& matrix, int lines); // Освобождение выделенной памяти
 	int swap(Matrix*& matrix, int x, int y); // Замена строк
 	int task(Matrix*& matrix); // Выполнение задания
+	Matrix* copy(Matrix*& matrix); // Копирование матрицы
 }
 
 #endif
