@@ -3,7 +3,7 @@
 
 namespace Lab1 {
 
-	Matrix* erase(Matrix*& matrix, int lines) {
+	int erase(Matrix*& matrix, int lines) {
 		List* ptr = nullptr;
 		List* tmp = nullptr;
 		if (lines != 0) {
@@ -19,7 +19,7 @@ namespace Lab1 {
 		}
 		delete[] matrix->lines;
 		delete matrix;
-		return nullptr;
+		return 0;
 	}
 
 	Matrix* input() {
@@ -95,7 +95,7 @@ namespace Lab1 {
 		return matrix;
 	}
 
-	void output(const char* msg, Matrix*& matrix) {
+	void output_with(const char* msg, Matrix*& matrix) {
 		std::cout << msg << ":\n";
 		List* ptr = nullptr;
 		for (int i = 0; i < matrix->m; ++i) {
@@ -110,6 +110,73 @@ namespace Lab1 {
 			}
 			std::cout << std::endl;
 		}
+	}
+
+	void output_without(const char* msg, Matrix*& matrix) {
+		std::cout << msg << ":\n";
+		List* ptr = nullptr;
+		for (int i = 0; i < matrix->m; ++i) {
+			ptr = &matrix->lines[i];
+			for (int j = 0; j < matrix->n; ++j) {
+				if (ptr->pos == j) {
+					std::cout << ptr->a << " ";
+					ptr = ptr->next;
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	Matrix* copy(Matrix*& matrix) {
+		Matrix* res = nullptr;
+		try {
+			res = new Matrix;
+		}
+		catch (std::bad_alloc& ba)
+		{
+			std::cout << "------ failure to allocate memory for the matrix: " << ba.what() << std::endl;
+			return nullptr;
+		}
+		res->m = matrix->m;
+		res->n = matrix->n;
+		// выделение памяти под массив списков
+		try {
+			res->lines = new List[res->m];
+		}
+		catch (std::bad_alloc& ba)
+		{
+			std::cout << "------ too many lines in matrix: " << ba.what() << std::endl;
+			erase(res, 0);
+			return nullptr;
+		}
+		for (int w = 0; w < res->m; w++) {
+			List* qwe = &res->lines[w];
+			qwe->next = nullptr;
+			qwe->pos = -1;
+		}
+		List* ptr = nullptr;
+		List* tmp = nullptr;
+		for (int i = 0; i < res->m; ++i) {
+			ptr = &matrix->lines[i];
+			tmp = &res->lines[i];
+			while (ptr != nullptr) {
+				tmp->a = ptr->a;
+				tmp->pos = ptr->pos;
+				try {
+					tmp->next = new List;
+				}
+				catch (std::bad_alloc& ba) {
+					std::cout << "------ too many items in matrix: " << ba.what() << std::endl;
+					erase(res, i + 1);
+					return nullptr;
+				}
+				tmp = tmp->next;
+				tmp->next = nullptr;
+				tmp->pos = -1;;
+				ptr = ptr->next;
+			}
+		}
+		return res;
 	}
 
 	int swap(Matrix*& matrix, int x, int y) {
@@ -141,7 +208,7 @@ namespace Lab1 {
 					}
 					ptr = ptr->next;
 				}
-				if (q > m_neg) {
+				if (q >= m_neg) {
 					m_neg = q;
 					y = i;
 				}
@@ -153,7 +220,10 @@ namespace Lab1 {
 		}
 		swap(matrix, 0, x);
 		if (x != y) {
-			swap(matrix, matrix->m - 1, y);
+			if (y == 0) {
+				swap(matrix, matrix->m - 1, x);
+			}
+			else swap(matrix, matrix->m - 1, y);
 		}
 		return 0;
 	}
