@@ -44,7 +44,7 @@ TEST(DecartMethods, Parameters) {
 	ASSERT_STREQ("x^3 + y^3 = -10.50xy\n", a2.frm());
 }
 
-int _tmain1(int argc, _TCHAR* argv[]) {
+int _tmain(int argc, _TCHAR* argv[]) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }
